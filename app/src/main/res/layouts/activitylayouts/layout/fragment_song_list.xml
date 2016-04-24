@@ -1,0 +1,37 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.databinding.ObservableArrayList" />
+
+        <import type="android.view.View" />
+
+        <import type="com.imli.demo.ViewModels.ViewModelMusic" />
+
+        <variable
+            name="viewModelMusic"
+            type="ObservableArrayList&lt;ViewModelMusic>" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility='@{viewModelMusic.size() > 0 ? View.GONE : View.VISIBLE}' />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerSongGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="true">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+</layout>

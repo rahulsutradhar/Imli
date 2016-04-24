@@ -1,0 +1,47 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="music"
+            type="com.imli.demo.ViewModels.ViewModelMusic" />
+
+        <variable
+            name="songNumber"
+            type="com.imli.demo.ViewModels.ViewModelSongNumberIndex"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundColor"
+        android:paddingBottom="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textStyle="bold"
+            android:text="@{music.artistName == null?music.albumName:music.artistName}"
+            android:textColor="@color/textColor"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerSongName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tool:spanCount="@{songNumber.indexSongNumber == 0 ? 1 : songNumber.indexSongNumber}"
+            tool:adapter="@{music.songList}">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+</layout>

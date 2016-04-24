@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- data -->
+    <data>
+
+        <variable
+            name="viewModelSpinner"
+            type="com.imli.demo.ViewModels.ViewModelSpinner" />
+    </data>
+
+
+    <!-- main layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Activity.MainActivity">
+
+        <!-- toolbar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+            app:theme="@style/CustomToolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true">
+
+                    <!-- song group -->
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinnerSongGroupBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:spinnerMode="dropdown"
+                        app:items="@{viewModelSpinner.list}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp">
+
+                    <!-- song number spinner -->
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinnerSongNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:spinnerMode="dropdown"
+                        app:spinnerAdapter="@{viewModelSpinner.numberList}" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <!-- rest of the layout -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.imli.demo.Fragment.FragmentSongList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>
