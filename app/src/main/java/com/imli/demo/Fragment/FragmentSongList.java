@@ -51,6 +51,7 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        //initializing the interface
         Context context = getActivity();
         ((MainActivity) context).fragmentCommunicator = this;
     }
@@ -74,31 +75,41 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
         mBinding.recyclerSongGroup.setLayoutManager(new LinearLayoutManager(getActivity()));
         mBinding.recyclerSongGroup.setAdapter(adapter);
 
+        //loading the data from the CSV file and the sorting it according to the Artist and Ablum
+        //then separetely storing the the two list in shared preffereance using gson library
         SharedPreferences loadingData = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean loadAlbum = loadingData.getBoolean("ablum_data", false);
         boolean loadArtist = loadingData.getBoolean("artist_data", false);
 
+        //checking if data is already loaded or not, and saved in shared preferance
         if (loadAlbum == true) {
             listGroup = retrieveDataFromLocalStorageAlbum();
 
         } else if (loadArtist == true) {
             listGroup = retrieveDataFromLocalStorageArtist();
         } else {
+            //when the data is not saved in shared prefference
             //load data from CSV file
             ArrayList<CSVFileGetterSetter> list = loadCSVFile();
+
+            // since initailly spinner Group has Album as choose, so we are 1st loading the recyclerview with the Album wise song
+            //simultaneously saving the list in shared prefference
             listGroup = readAlbumWise(list);
+
+            //sorting and saving the list artish wise in shared prefference
             readArtistWise(list);
         }
 
         ViewModelSongNumberIndex indexModel = new ViewModelSongNumberIndex();
         indexModel.setIndexSongNumber(1);
 
-        adapter.setMusicData(listGroup,indexModel);
+        adapter.setMusicData(listGroup, indexModel);
 
 
     }
 
 
+    //reading the data from the CSV File
     public ArrayList<CSVFileGetterSetter> loadCSVFile() {
         InputStream inputStream = getResources().openRawResource(R.raw.sample_music_data);
         CSVFile csvFile = new CSVFile(inputStream);
@@ -121,7 +132,6 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
 
             if (list.get(i).getArtistTaken() == 0) {
                 CSVFileGetterSetter object = list.get(i);
-                Log.i("Consider Artist Name = ", object.getArtistName());
 
                 k = i + 1;
 
@@ -163,13 +173,6 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
         }
 
 
-        //check the array data
-        for (int j = 0; j < listGroup.size(); j++) {
-            Log.i("Artst Name == ", listGroup.get(j).getArtistName());
-            for (int m = 0; m < listGroup.get(j).getSongList().size(); m++)
-                Log.i("Song Name == ", listGroup.get(j).getSongList().get(m).getSongName());
-        }
-
         //save in local
         SharedPreferences saveAlbum = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = saveAlbum.edit();
@@ -192,7 +195,6 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
 
             if (list.get(i).getAlbumTaken() == 0) {
                 CSVFileGetterSetter object = list.get(i);
-                Log.i("Consider Album Name = ", object.getAlbumName());
 
                 k = i + 1;
 
@@ -204,8 +206,6 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
                         ViewModelSongName viewModelSongName = new ViewModelSongName();
                         viewModelSongName.setSongName(newObj.getSongName());
                         songList.add(viewModelSongName);
-                        Log.i("Got Song name = ", newObj.getSongName());
-                        Log.i("Position Deleted = ", k + "");
 
                         list.get(k).setAlbumTaken(1);
                         k++;
@@ -236,13 +236,6 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
         }
 
 
-        //check the array data
-        for (int j = 0; j < listGroup.size(); j++) {
-            Log.i("Album Name == ", listGroup.get(j).getAlbumName());
-            for (int m = 0; m < listGroup.get(j).getSongList().size(); m++)
-                Log.i("Song Name == ", listGroup.get(j).getSongList().get(m).getSongName());
-        }
-
         //save in local
         SharedPreferences saveAlbum = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = saveAlbum.edit();
@@ -261,6 +254,8 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
         SharedPreferences data = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = data.edit();
+
+        //converting the list data to string value so that we can save in shared prefference as akey value pair
         Gson gson = new Gson();
         String listArtist = gson.toJson(arrayListArtist);
         editor.putString("artist_song_data", listArtist);
@@ -274,6 +269,7 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
         Gson gson = new Gson();
         String listArtist = homeStoresData.getString("artist_song_data", "");
 
+        //retriving the data from string in a list
         Type type = new TypeToken<ObservableArrayList<ViewModelMusic>>() {
         }.getType();
         ObservableArrayList<ViewModelMusic> list = gson.fromJson(listArtist, type);
@@ -288,6 +284,8 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
         SharedPreferences data = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = data.edit();
+
+        //converting the list data to string value so that we can save in shared prefference as akey value pair
         Gson gson = new Gson();
         String listAlbum = gson.toJson(arrayListAlbum);
         editor.putString("album_song_data", listAlbum);
@@ -301,6 +299,7 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
         Gson gson = new Gson();
         String listAlbum = homeStoresData.getString("album_song_data", "");
 
+        //retriving the data from string in a list
         Type type = new TypeToken<ObservableArrayList<ViewModelMusic>>() {
         }.getType();
         ObservableArrayList<ViewModelMusic> list = gson.fromJson(listAlbum, type);
@@ -308,32 +307,34 @@ public class FragmentSongList extends Fragment implements MainActivity.FragmentC
         return list;
     }
 
+    //interface methord for the Spinner group choosed index
     @Override
-    public void passDataToFragmentSpinnerGroup(int someValue,ViewModelSongNumberIndex viewModelSongNumberIndex) {
+    public void passDataToFragmentSpinnerGroup(int someValue, ViewModelSongNumberIndex viewModelSongNumberIndex) {
 
         listGroup.clear();
-       // adapter.setMusicData(listGroup);
 
-        //load dat from the
-        switch (someValue)
-        {
+        switch (someValue) {
             case 0:
+                //getting list from local
                 listGroup = retrieveDataFromLocalStorageAlbum();
-                adapter.setMusicData(listGroup,viewModelSongNumberIndex);
+                adapter.setMusicData(listGroup, viewModelSongNumberIndex);
                 break;
             case 1:
+                //getting list from local
                 listGroup = retrieveDataFromLocalStorageArtist();
-                adapter.setMusicData(listGroup,viewModelSongNumberIndex);
+                adapter.setMusicData(listGroup, viewModelSongNumberIndex);
                 break;
         }
     }
 
+    //interface methord for the Spinner song number choosed index
     @Override
     public void passDataToFragmentSongNumber(int someValue) {
 
+        //creating the viewModel class object for the Song Number to be displayed in a page
         ViewModelSongNumberIndex index = new ViewModelSongNumberIndex();
         index.setIndexSongNumber(someValue);
-        adapter.setMusicData(listGroup,index);
+        adapter.setMusicData(listGroup, index);
 
     }
 }

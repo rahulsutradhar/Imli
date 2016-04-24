@@ -10,23 +10,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.imli.demo.R;
-import com.imli.demo.ViewModels.ViewModelSongNumber;
-import com.imli.demo.ViewModels.ViewModelSpinnerItem;
-import com.imli.demo.databinding.ItemRowSpinnerBinding;
+import com.imli.demo.ViewModels.ViewModelSongNumberSpinnerItem;
 import com.imli.demo.databinding.ItemRowSpinnerSongNumberBinding;
 import com.imli.demo.BR;
 
 /**
  * Created by developers on 22/04/16.
  */
-public class CustomSpinnerAdpaterSongNumber extends ArrayAdapter<ViewModelSongNumber> {
+public class CustomSpinnerAdpaterSongNumber extends ArrayAdapter<ViewModelSongNumberSpinnerItem> {
 
     private Context context1;
-    private ObservableArrayList<ViewModelSongNumber> data;
+    private ObservableArrayList<ViewModelSongNumberSpinnerItem> data;
     public Resources res;
     LayoutInflater inflater;
 
-    public CustomSpinnerAdpaterSongNumber(Context context, ObservableArrayList<ViewModelSongNumber> objects) {
+    public CustomSpinnerAdpaterSongNumber(Context context, ObservableArrayList<ViewModelSongNumberSpinnerItem> objects) {
         super(context, R.layout.item_row_spinner_song_number, objects);
 
         context1 = context;
@@ -61,7 +59,7 @@ public class CustomSpinnerAdpaterSongNumber extends ArrayAdapter<ViewModelSongNu
 
         ItemRowSpinnerSongNumberBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.item_row_spinner_song_number, parent, false);
 
-        final ViewModelSongNumber viewModelSongNumber = data.get(position);
+        final ViewModelSongNumberSpinnerItem viewModelSongNumber = data.get(position);
         mBinding.setVariable(BR.spinnerItem, viewModelSongNumber);
 
         return mBinding.getRoot();

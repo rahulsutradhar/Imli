@@ -8,7 +8,7 @@ import com.imli.demo.BR;
 /**
  * Created by developers on 16/04/16.
  */
-public class ViewModelSpinnerItem extends BaseObservable {
+public class ViewModelGroupNameSpinnerItem extends BaseObservable {
 
     private String groupName;
 

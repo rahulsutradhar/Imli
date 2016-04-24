@@ -52,6 +52,8 @@ public class AdapterSongName extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         final ViewModelSongName name = listName.get(position);
+
+        //binding the the song name data
         ((BindingHolderSongName) holder).getBinding().setVariable(BR.song, name);
         ((BindingHolderSongName) holder).getBinding().executePendingBindings();
     }

@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.imli.demo.ViewModels.ViewModelSongNumber;
+import com.imli.demo.ViewModels.ViewModelSongNumberSpinnerItem;
 import com.imli.demo.ViewModels.ViewModelSongNumberIndex;
 import com.imli.demo.ViewModels.ViewModelSpinner;
 import com.imli.demo.R;
-import com.imli.demo.ViewModels.ViewModelSpinnerItem;
+import com.imli.demo.ViewModels.ViewModelGroupNameSpinnerItem;
 import com.imli.demo.databinding.ActivityMainBinding;
 
 
@@ -20,11 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    ObservableArrayList<ViewModelSpinnerItem> groupList = new ObservableArrayList<>();
-    ObservableArrayList<ViewModelSongNumber> numberList = new ObservableArrayList<>();
+    ObservableArrayList<ViewModelGroupNameSpinnerItem> groupList = new ObservableArrayList<>();
+    ObservableArrayList<ViewModelSongNumberSpinnerItem> numberList = new ObservableArrayList<>();
 
     public FragmentCommunicator fragmentCommunicator;
 
+    //interface for communicating with the fragment, because spinner is in activity  and recyclerview is in fragment
+    //need to pass the spnner choosen value to the fragment , so that accordingly data can be shown
     public interface FragmentCommunicator{
         public void passDataToFragmentSpinnerGroup(int someValue,ViewModelSongNumberIndex index);
         public void passDataToFragmentSongNumber(int someValue);
@@ -40,23 +42,25 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         binding.toolbar.setTitle(" ");
 
-        //add item
+        //add item in spinner for the Group of Song
         add();
-        //add item for 2nd spinner
+        //add item in spinner for the song number in a page
         addSongNumber();
 
+        //binding data
         ViewModelSpinner modelSpinner = new ViewModelSpinner();
         modelSpinner.setList(groupList);
         modelSpinner.setNumberList(numberList);
         binding.setViewModelSpinner(modelSpinner);
 
+        //listener for the spinner Group to get the selected data
         binding.spinnerSongGroupBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (fragmentCommunicator != null)
                 {
-                    ViewModelSongNumber indexSong = (ViewModelSongNumber) binding.spinnerSongNumber.getSelectedItem();
+                    ViewModelSongNumberSpinnerItem indexSong = (ViewModelSongNumberSpinnerItem) binding.spinnerSongNumber.getSelectedItem();
                     ViewModelSongNumberIndex  index = new ViewModelSongNumberIndex();
                     index.setIndexSongNumber(Integer.parseInt(indexSong.getSongNumber()));
                     fragmentCommunicator.passDataToFragmentSpinnerGroup(position,index);
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //listener for the spinner songNumber to get the selected song Number to be displayed in a page
         binding.spinnerSongNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,34 +94,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void add() {
-        ViewModelSpinnerItem m1 = new ViewModelSpinnerItem();
+        ViewModelGroupNameSpinnerItem m1 = new ViewModelGroupNameSpinnerItem();
         m1.setGroupName("Album");
         groupList.add(m1);
 
-        ViewModelSpinnerItem m2 = new ViewModelSpinnerItem();
+        ViewModelGroupNameSpinnerItem m2 = new ViewModelGroupNameSpinnerItem();
         m2.setGroupName("Artist");
         groupList.add(m2);
 
     }
 
     public void addSongNumber() {
-        ViewModelSongNumber m1 = new ViewModelSongNumber();
+        ViewModelSongNumberSpinnerItem m1 = new ViewModelSongNumberSpinnerItem();
         m1.setSongNumber("1");
         numberList.add(m1);
 
-        ViewModelSongNumber m2 = new ViewModelSongNumber();
+        ViewModelSongNumberSpinnerItem m2 = new ViewModelSongNumberSpinnerItem();
         m2.setSongNumber("2");
         numberList.add(m2);
 
-        ViewModelSongNumber m3 = new ViewModelSongNumber();
+        ViewModelSongNumberSpinnerItem m3 = new ViewModelSongNumberSpinnerItem();
         m3.setSongNumber("3");
         numberList.add(m3);
 
-        ViewModelSongNumber m4 = new ViewModelSongNumber();
+        ViewModelSongNumberSpinnerItem m4 = new ViewModelSongNumberSpinnerItem();
         m4.setSongNumber("4");
         numberList.add(m4);
 
-        ViewModelSongNumber m5 = new ViewModelSongNumber();
+        ViewModelSongNumberSpinnerItem m5 = new ViewModelSongNumberSpinnerItem();
         m5.setSongNumber("5");
         numberList.add(m5);
 

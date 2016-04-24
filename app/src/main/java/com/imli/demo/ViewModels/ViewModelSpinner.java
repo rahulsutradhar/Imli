@@ -6,7 +6,7 @@ import android.databinding.BindingAdapter;
 import android.databinding.ObservableArrayList;
 import android.widget.Spinner;
 
-import com.imli.demo.Adapter.CustomSpinnerAdapter;
+import com.imli.demo.Adapter.CustomSpinnerAdapterGroupName;
 import com.imli.demo.Adapter.CustomSpinnerAdpaterSongNumber;
 import com.imli.demo.BR;
 
@@ -16,22 +16,22 @@ import com.imli.demo.BR;
 public class ViewModelSpinner extends BaseObservable {
 
 
-    private ObservableArrayList<ViewModelSpinnerItem> list;
-    private ObservableArrayList<ViewModelSongNumber> numberList;
+    private ObservableArrayList<ViewModelGroupNameSpinnerItem> list;
+    private ObservableArrayList<ViewModelSongNumberSpinnerItem> numberList;
 
     @Bindable
-    public ObservableArrayList<ViewModelSpinnerItem> getList() {
+    public ObservableArrayList<ViewModelGroupNameSpinnerItem> getList() {
         return list;
     }
 
-    public void setList(ObservableArrayList<ViewModelSpinnerItem> list) {
+    public void setList(ObservableArrayList<ViewModelGroupNameSpinnerItem> list) {
         this.list = list;
         notifyPropertyChanged(BR.list);
     }
 
     @BindingAdapter("app:items")
-    public static void setItems(Spinner spinner, final ObservableArrayList<ViewModelSpinnerItem> list) {
-        CustomSpinnerAdapter customSpinnerAdapter = new CustomSpinnerAdapter(spinner.getContext(), list);
+    public static void setItems(Spinner spinner, final ObservableArrayList<ViewModelGroupNameSpinnerItem> list) {
+        CustomSpinnerAdapterGroupName customSpinnerAdapter = new CustomSpinnerAdapterGroupName(spinner.getContext(), list);
         spinner.setAdapter(customSpinnerAdapter);
 
 
@@ -41,17 +41,17 @@ public class ViewModelSpinner extends BaseObservable {
     //second spinner
 
     @Bindable
-    public ObservableArrayList<ViewModelSongNumber> getNumberList() {
+    public ObservableArrayList<ViewModelSongNumberSpinnerItem> getNumberList() {
         return numberList;
     }
 
-    public void setNumberList(ObservableArrayList<ViewModelSongNumber> numberList) {
+    public void setNumberList(ObservableArrayList<ViewModelSongNumberSpinnerItem> numberList) {
         this.numberList = numberList;
     }
 
 
     @BindingAdapter("app:spinnerAdapter")
-    public static void setSpinnerAdapter(Spinner spinner, final ObservableArrayList<ViewModelSongNumber> list) {
+    public static void setSpinnerAdapter(Spinner spinner, final ObservableArrayList<ViewModelSongNumberSpinnerItem> list) {
         CustomSpinnerAdpaterSongNumber customSpinnerAdpaterSongNumber = new CustomSpinnerAdpaterSongNumber(spinner.getContext(), list);
         spinner.setAdapter(customSpinnerAdpaterSongNumber);
 

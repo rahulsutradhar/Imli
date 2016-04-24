@@ -8,7 +8,7 @@
     </data>
 
     <LinearLayout
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:visibility="visible">
 
@@ -18,10 +18,10 @@
             android:background="#F9F9F9"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:singleLine="true"
             android:text="@{song.songName}"
             android:textColor="@color/textColor"

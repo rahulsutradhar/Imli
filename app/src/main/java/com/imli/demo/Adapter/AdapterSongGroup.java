@@ -34,7 +34,9 @@ public class AdapterSongGroup extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setMusicData(ObservableArrayList<ViewModelMusic> listMusic,ViewModelSongNumberIndex viewModelSongNumberIndex) {
 
+        //the songNumber data to be displayed in a page
         this.viewModelSongNumberIndex = viewModelSongNumberIndex;
+        //the list of the data
         this.listMusic = listMusic;
         notifyDataSetChanged();
     }
@@ -55,7 +57,10 @@ public class AdapterSongGroup extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (listMusic.size() > 0) {
             final ViewModelMusic viewModelMusic = listMusic.get(position);
+            //binding the list of data with group name and song list
             ((BindingHolderMusicType) holder).getBinding().setVariable(BR.music, viewModelMusic);
+
+            //binding the song number data
             ((BindingHolderMusicType) holder).getBinding().setVariable(BR.songNumber,viewModelSongNumberIndex);
             ((BindingHolderMusicType) holder).getBinding().executePendingBindings();
 

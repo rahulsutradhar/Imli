@@ -7,10 +7,9 @@ import com.imli.demo.BR;
 /**
  * Created by developers on 22/04/16.
  */
-public class ViewModelSongNumber extends BaseObservable {
+public class ViewModelSongNumberSpinnerItem extends BaseObservable {
 
     private String songNumber;
-    private int index;
 
     @Bindable
     public String getSongNumber() {

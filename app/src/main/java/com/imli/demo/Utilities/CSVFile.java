@@ -25,7 +25,7 @@ public class CSVFile {
 
     public ArrayList<CSVFileGetterSetter> readFile() {
 
-        int i =0;
+        int i = 0;
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         try {
@@ -45,9 +45,6 @@ public class CSVFile {
                     csv.setAlbumTaken(0);
                     list.add(csv);
 
-                    Log.i("CSV Song name : ", row[0]);
-                    Log.i("CSV Artist Name : ", row[1]);
-                    Log.i("CSV Album name : ", row[2]);
                 }
 
             }

@@ -58,6 +58,7 @@ public class ViewModelMusic extends BaseObservable {
     @BindingAdapter({"tool:adapter","tool:spanCount"})
     public static void setAdapter(RecyclerView recyclerView,ObservableArrayList<ViewModelSongName> list,int spanCount)
     {
+
         if(spanCount > list.size() )
         {
             spanCount = list.size();

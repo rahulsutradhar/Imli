@@ -4,7 +4,7 @@
 
         <variable
             name="spinnerItem"
-            type="com.imli.demo.ViewModels.ViewModelSongNumber" />
+            type="com.imli.demo.ViewModels.ViewModelSongNumberSpinnerItem" />
     </data>
 
     <TextView

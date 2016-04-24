@@ -8,26 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import com.imli.demo.R;
-import com.imli.demo.ViewModels.ViewModelSpinnerItem;
-import com.imli.demo.databinding.ItemRowSpinnerBinding;
+import com.imli.demo.ViewModels.ViewModelGroupNameSpinnerItem;
 
 import com.imli.demo.BR;
+import com.imli.demo.databinding.ItemRowSpinnerGroupNameBinding;
 
 /**
  * Created by developers on 22/04/16.
  */
-public class CustomSpinnerAdapter extends ArrayAdapter<ViewModelSpinnerItem> {
+public class CustomSpinnerAdapterGroupName extends ArrayAdapter<ViewModelGroupNameSpinnerItem> {
 
     private Context context1;
-    private ObservableArrayList<ViewModelSpinnerItem> data;
+    private ObservableArrayList<ViewModelGroupNameSpinnerItem> data;
     public Resources res;
     LayoutInflater inflater;
 
-    public CustomSpinnerAdapter(Context context, ObservableArrayList<ViewModelSpinnerItem> objects) {
-        super(context, R.layout.item_row_spinner, objects);
+    public CustomSpinnerAdapterGroupName(Context context, ObservableArrayList<ViewModelGroupNameSpinnerItem> objects) {
+        super(context, R.layout.item_row_spinner_group_name, objects);
 
         context1 = context;
         data = objects;
@@ -59,9 +58,9 @@ public class CustomSpinnerAdapter extends ArrayAdapter<ViewModelSpinnerItem> {
         //tvCategory.setText(data.get(position).toString());
 
 
-        ItemRowSpinnerBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.item_row_spinner, parent, false);
+        ItemRowSpinnerGroupNameBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.item_row_spinner_group_name, parent, false);
 
-        final ViewModelSpinnerItem viewModelSpinnerItem = data.get(position);
+        final ViewModelGroupNameSpinnerItem viewModelSpinnerItem = data.get(position);
         mBinding.setVariable(BR.spinnerItem, viewModelSpinnerItem);
 
         return mBinding.getRoot();
